@@ -1,0 +1,57 @@
+digraph Workflow {
+rankdir=LR
+fontname=Courier; fontsize=18; labelloc=t
+label="LinearOriginalOR#"
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+"core/text-transform0#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform0#\" |<f1> Text transform on cells in column price using expression value.toNumber()}}"];
+"core/text-transform1#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform1#\" |<f1> Text transform on cells in column high_price using expression value.toNumber()}}"];
+"core/text-transform2#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform2#\" |<f1> Text transform on cells in column high_price using expression grel\:if(isNull(value), 0, value)}}"];
+"core/text-transform3#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform3#\" |<f1> Text transform on cells in column price using expression grel\:if(isNull(value), 0, value)}}"];
+"core/text-transform4#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform4#\" |<f1> Text transform on cells in column price using expression grel\:if(value < 0, 0, value)}}"];
+"core/text-transform5#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform5#\" |<f1> Text transform on cells in column high_price using expression grel\:if(value < 0, 0, value)}}"];
+"core/text-transform6#" [shape=record rankdir=LR label="{{<f0> \"core/text-transform6#\" |<f1> Text transform on cells in column high_price using expression grel:max(value, cells[price].value)}}"];
+edge[fontname=Helvetica]
+"core/text-transform0#" -> "core/text-transform1#" [label=table1]
+"core/text-transform1#" -> "core/text-transform2#" [label=table2]
+"core/text-transform2#" -> "core/text-transform3#" [label=table3]
+"core/text-transform3#" -> "core/text-transform4#" [label=table4]
+"core/text-transform4#" -> "core/text-transform5#" [label=table5]
+"core/text-transform5#" -> "core/text-transform6#" [label=table6]
+}}
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+"col-name:price_input_port" [label=""]
+"expression:value.toNumber()_input_port" [label=""]
+"col-name:high_price_input_port" [label=""]
+"expression:grel:if(value_input_port)" [label=""]
+"expression:grel:max(value,_input_port)" [label=""]
+"expression:grel:if(isNull(value)),_input_port" [label=""]
+table0_input_port [label=""]
+}}
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+node[shape=circle style=filled fillcolor="#FFFFFF" peripheries=1 fontname=Courier width=0.2]
+table7_output_port [label=""]
+}}
+edge[fontname=Helvetica]
+"col-name:price_input_port" -> "core/text-transform0#" [label="col-name:price"]
+"col-name:price_input_port" -> "core/text-transform3#" [label="col-name:price"]
+"col-name:price_input_port" -> "core/text-transform4#" [label="col-name:price"]
+"expression:value.toNumber()_input_port" -> "core/text-transform0#" [label="expression:value.toNumber()"]
+"expression:value.toNumber()_input_port" -> "core/text-transform1#" [label="expression:value.toNumber()"]
+table0_input_port -> "core/text-transform0#" [label=table0]
+"col-name:high_price_input_port" -> "core/text-transform1#" [label="col-name:high_price"]
+"col-name:high_price_input_port" -> "core/text-transform2#" [label="col-name:high_price"]
+"col-name:high_price_input_port" -> "core/text-transform5#" [label="col-name:high_price"]
+"col-name:high_price_input_port" -> "core/text-transform6#" [label="col-name:high_price"]
+"expression:grel:if(isNull(value),_input_port" -> "core/text-transform2#" [label="expression:grel:if(isNull(value),"]
+"expression:grel:if(isNull(value),_input_port" -> "core/text-transform3#" [label="expression:grel:if(isNull(value),"]
+"expression:grel:if(value_input_port" -> "core/text-transform4#" [label="expression:grel:if(value"]
+"expression:grel:if(value_input_port" -> "core/text-transform5#" [label="expression:grel:if(value"]
+"expression:grel:max(value,_input_port" -> "core/text-transform6#" [label="expression:grel:max(value,"]
+edge[fontname=Helvetica]
+"core/text-transform6#" -> table7_output_port [label=table7]
+}
